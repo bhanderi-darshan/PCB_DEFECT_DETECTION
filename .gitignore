@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Datasets & Models
+datasets/
+models/*.pt
+yolov8n.pt
+yolov8m.pt
+yolov8s.pt
+yolov8l.pt
+yolov8x.pt
+
+# UI / Temp Files
+static/uploads/*
+static/results/*
+!static/uploads/.gitkeep
+!static/results/.gitkeep
+
+# Logs & Runs
+runs/
+*.log
+
+# OS
+.DS_Store

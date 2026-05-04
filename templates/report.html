@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Inspection Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="report-header">
+            <div>
+                <h1 style="text-align: left; margin: 0;">Inspection Report</h1>
+                <p style="text-align: left;">Industrial AI Analysis • {{ analysis.inference_time }}s Processing</p>
+                <p style="text-align: left; font-size: 0.75rem; color: var(--accent-color); font-weight: bold;">ENGINE: {{ model_status }}</p>
+            </div>
+            <div class="verdict {{ analysis.verdict.lower() }}">
+                DECISION: {{ analysis.verdict }}
+            </div>
+        </header>
+
+        <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="stat-item">
+                <div class="label">Total Hazards</div>
+                <div class="val">{{ analysis.total_defects }}</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">Risk Level</div>
+                <div class="val {% if analysis.risk_level == 'High' %}text-high{% elif analysis.risk_level == 'Medium' %}text-medium{% else %}text-low{% endif %}">
+                    {{ analysis.risk_level }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom: 1.5rem; color: var(--accent-color);">Analysis Visualization</h3>
+            <div class="comparison-view" style="grid-template-columns: 1fr;">
+                <div class="img-container">
+                    <p style="padding: 0.5rem; background: rgba(0,0,0,0.5); font-size: 0.8rem; text-align: center; color: white;">AI DETECTIONS (YOLOv8m)</p>
+                    <img src="{{ url_for('static', filename='results/' + result_img) }}" alt="AI Result">
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom: 1.5rem; color: var(--accent-color);">Defect Engineering Breakdown</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SOURCE</th>
+                            <th>DEFECT TYPE</th>
+                            <th>CONFIDENCE / AREA</th>
+                            <th>SEVERITY</th>
+                            <th>RECOMMENDED PROCESS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for defect in analysis.defects_breakdown %}
+                        <tr>
+                            <td style="font-size: 0.8rem; color: var(--text-secondary);">{{ defect.source }}</td>
+                            <td style="font-weight: 700;">{{ defect.type }}</td>
+                            <td>{{ defect.confidence }}</td>
+                            <td>
+                                <span class="{% if defect.severity == 'Critical' %}text-high{% elif defect.severity == 'Moderate' %}text-medium{% else %}text-low{% endif %}" style="font-weight: 700;">
+                                    {{ defect.severity }}
+                                </span>
+                            </td>
+                            <td style="font-style: italic;">{{ defect.process }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 3rem; color: var(--success); font-weight: 800; font-size: 1.2rem;">
+                                ✓ NO INDUSTRIAL DEFECTS DETECTED. UNIT CLEAR FOR ASSEMBLY.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card" style="background: rgba(56, 189, 248, 0.1);">
+            <h3 style="margin-bottom: 1rem;">Required Manufacturing Processes</h3>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                {% for process in analysis.required_processes %}
+                    <span style="background: var(--accent-color); color: var(--bg-color); padding: 0.4rem 1rem; border-radius: 0.5rem; font-weight: 700; font-size: 0.9rem;">
+                        {{ process }}
+                    </span>
+                {% else %}
+                    <span style="color: var(--success);">No rework required.</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <a href="/" class="btn" style="max-width: 300px; background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">
+                NEW INSPECTION SESSION
+            </a>
+        </div>
+    </div>
+</body>
+</html>

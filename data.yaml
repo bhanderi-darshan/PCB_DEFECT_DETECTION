@@ -1,0 +1,7 @@
+path: /home/harshil-domadiya/.cache/kagglehub/datasets/norbertelter/pcb-defect-dataset/versions/2/pcb-defect-dataset
+train: train/images
+val: val/images
+test: test/images
+
+nc: 6
+names: ['mouse_bite', 'spur', 'missing_hole', 'short', 'open_circuit', 'spurious_copper']

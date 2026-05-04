@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial PCB Inspection Suite</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Industrial PCB Inspection Suite</h1>
+            <p>AI-Powered Quality Assurance & Digital Comparison</p>
+        </header>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="card"
+            style="padding: 1rem; color: #ef4444; border: 1px solid #ef4444; margin-bottom: 1.5rem; text-align: center;">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="card">
+            <h2 style="margin-bottom: 2rem; font-weight: 800; color: var(--accent-color);">New Inspection Task</h2>
+
+            <form id="upload-form" action="/detect" method="POST" enctype="multipart/form-data">
+                <div class="upload-grid" style="grid-template-columns: 1fr;">
+                    <!-- Sample Board (Under Inspection) -->
+                    <div class="upload-box" id="sample-box">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚙️</div>
+                        <h3>Board Under Test</h3>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary);">Live production sample</p>
+                        <input type="file" name="sample" id="sample" accept="image/*"
+                            style="opacity: 0; position: absolute; width: 0; height: 0;" required>
+                        <div id="sample-name"
+                            style="margin-top: 1rem; font-weight: 700; color: var(--success); font-size: 0.8rem;"></div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button type="submit" class="btn" id="submit-btn" style="max-width: 400px;">
+                        LAUNCH ANALYSIS
+                    </button>
+                    <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-secondary);">
+                        AI + Digital Feature Matching will be applied
+                    </p>
+                </div>
+            </form>
+
+            <div id="loader-container" class="loader-container">
+                <div class="loader"></div>
+                <h3 style="margin-top: 1rem;">Analyzing Circuit Structures</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Registering images and running YOLOv8
+                    Inference...</p>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // Custom UI for File Inputs
+        document.getElementById('sample-box').onclick = () => document.getElementById('sample').click();
+
+        document.getElementById('sample').onchange = function () {
+            document.getElementById('sample-name').textContent = "✓ " + this.files[0].name;
+            document.getElementById('sample-box').style.borderColor = 'var(--success)';
+            document.getElementById('sample-box').style.background = 'rgba(34, 197, 94, 0.05)';
+        };
+
+        document.getElementById('upload-form').onsubmit = function () {
+            if (document.getElementById('sample').files.length > 0) {
+                document.getElementById('loader-container').style.display = 'block';
+                document.getElementById('upload-form').style.display = 'none';
+                return true;
+            }
+            return false;
+        };
+    </script>
+</body>
+
+</html>
