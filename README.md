@@ -26,8 +26,19 @@ The system produces an output image where detected defects are highlighted with 
 
 
  🖥️GUI for the Imput image:
+ 
+ <img width="1205" height="878" alt="GUI" src="https://github.com/user-attachments/assets/ab2f070e-c7f6-4f34-aaf1-31aea49b60d5" />
+ 
 
 
- 🖼️INPUT:
 
- ✅OUTPUT: 
+ 🖼️INPUT: input image from system, we select the image _
+ 
+ <img width="600" height="600" alt="1missing_hole" src="https://github.com/user-attachments/assets/2f8931e3-3af6-4106-9f56-a1f5ca5a3e0c" />
+
+
+
+ ✅OUTPUT:
+ 
+ <img width="566" height="875" alt="Screenshot from 2026-05-04 12-38-27" src="https://github.com/user-attachments/assets/11e63ce1-57f3-4e74-92b0-8362118a6b5b" />
+
