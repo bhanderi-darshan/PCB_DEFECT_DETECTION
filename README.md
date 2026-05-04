@@ -81,5 +81,3 @@ The project utilizes **YOLOv8 (You Only Look Once version 8)**, a state-of-the-a
 ### AI Output Sample:
 <img width="566" height="875" alt="Screenshot" src="https://github.com/user-attachments/assets/11e63ce1-57f3-4e74-92b0-8362118a6b5b" />
 
-## 📄 License
-This project is licensed under the MIT License.
