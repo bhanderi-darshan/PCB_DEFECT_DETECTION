@@ -5,3 +5,7 @@ numpy
 torch
 pandas
 matplotlib
+streamlit
+scikit-image
+customtkinter
+Pillow
